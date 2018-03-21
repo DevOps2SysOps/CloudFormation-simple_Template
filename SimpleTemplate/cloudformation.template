@@ -3,6 +3,28 @@
 
 	"Description" : "Single Instance",
 
+	"Parameters"        : {
+		"KeyName" : {
+			"Description" : " Name of an existing EC2 KeyPair to Enable SSH access to the instance",
+			"Type" : "AWS::EC2::KeyPair::KeyName",
+			"ConstraintDescription" : "must be the name of an existing EC2 KeyPair."
+		},
+		"InstanceType"  : {
+			"Description" : "WebServer EC2 instance type",
+			"Type"    : "String",
+			"Default" : "t2.micro",
+			"AllowedValues" :  [
+				"t1.micro",
+				"t2.nano",
+				"t2.small",
+				"t2.medium",
+				"t2.large"
+			],
+			"ConstraintDescription" : "must be a valid EC2 instance type"
+		},
+
+
+
 	"Resources" : {
 		"Web1" : {
 			"Type" : "AWS::EC2::Instance",
@@ -12,7 +34,7 @@
 				"SecurityGroups" : [
 					{"Ref" : "WebSecurityGroup"}
 				],
-				"KeyName" : "virginia",
+				"KeyName" : { "Ref" : "KeyName"},
 				"Tags"	: [
 					{
 						"Key" : "Name",
